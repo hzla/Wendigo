@@ -4,6 +4,12 @@ class Trader < ActiveRecord::Base
 
 	# fills out the pnl at the time of the trade for all of a traders trades
 	# gets largest trade, get std of returns (notional)
+
+	def self.update_all_stats
+		Trader.all.each do |trader|
+			trader.update_stats
+		end
+	end
 	
 	def update_stats
 		ordered_trades = trades.order(timestamp: :asc)
@@ -29,11 +35,12 @@ class Trader < ActiveRecord::Base
 		end
 
 		# get std of returns
-		avg_return = total_pnl / closed_trades
+		
 
-		if ordered_trades.length < 2
+		if closed_trades < 2
 			std = 0
 		else
+			avg_return = total_pnl / closed_trades
 			total_deviation = 0
 
 			ordered_trades.each do |trade|
@@ -43,17 +50,12 @@ class Trader < ActiveRecord::Base
 
 			p total_deviation
 
-			std = Math.sqrt(total_deviation - (ordered_trades.length - 1))
+			std = Math.sqrt(total_deviation / (ordered_trades.length - 1))
 		end
-
-		p std
-		p "/////////////////"
-
 
 		#pnl 2 decimals
 		update pnl: current_pnl, pnl_percentage: current_pnl_percentage, max_size: max_size, trade_count: ordered_trades.length, max_size: max_size, std: std
 	end
-
 end
 
 
