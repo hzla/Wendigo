@@ -3,8 +3,15 @@ class Trade < ActiveRecord::Base
 	has_many :actions
 
 
+	def self.clear
+		Trade.destroy_all
+		Action.destroy_all
+		Trader.destroy_all
+	end
+
+
 	def self.load_to_db
-		(0..100).each do |n|
+		(95..100).each do |n|
 			trades = JSON.parse(File.read("lib/trades/#{n}.json"))
 		
 			trades.each do |trade|
@@ -21,7 +28,9 @@ class Trade < ActiveRecord::Base
 					fees: trade["fee"].to_f,
 					closed: (!!trade["closedPosition"] == true),
 					liquidated: (!!trade["liquidatedPosition"] == true),
-					trader_id: trader.id
+					trader_id: trader.id,
+					pnl: trade["realisedPnl"],
+					pnl_percentage: trade["realisedPnlPercentage"]
 				)
 
 				# Add individual trade actions
