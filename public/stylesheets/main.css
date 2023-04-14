@@ -1,0 +1,66 @@
+html {
+    color:  white;
+    font-family: monospace;
+    background: #08090f;
+} 
+
+a {
+	text-decoration: none;
+	color:  white;
+}
+
+#header {
+	background-color: rgb(15, 19, 31);
+    padding: 0rem 16px;
+    position:  fixed;
+    height:  48px;
+    display:  flex;
+    line-height: 48px;
+    width:  100vw;
+}
+
+.header-left {
+	display: flex;
+}
+
+.header-title {
+	margin-right:  40px;
+	font-size:  24px;
+}
+
+.header-item {
+	margin-right: 30px;
+}
+
+section {
+	border-radius: 8px;
+    border: 1px solid rgb(20, 25, 41);
+}
+
+.section-header {
+	background: radial-gradient(28.02% 194.12% at 56.22% 248.04%, rgba(104, 119, 255, 0.1) 0%, rgba(104, 119, 255, 0) 100%), radial-gradient(31% 214.71% at 88.97% 189.22%, rgba(149, 159, 255, 0.1) 0%, rgba(149, 159, 255, 0) 100%), radial-gradient(275.49% 679.7% at 2.11% 300%, rgba(29, 155, 222, 0.1) 0%, rgba(29, 155, 222, 0) 100%), rgb(9, 10, 16);
+    background-blend-mode: soft-light, normal, normal, normal, normal, normal;
+    height: 51px;
+    display: flex;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    border-bottom: 1px solid rgb(20, 25, 41);
+    padding: 0px 16px;
+    font-size:  20px;
+}
+
+#filter-bar {
+	position:  fixed;
+	left:  0;
+	top:  48px;
+	width: 30vw;
+	height:  calc(100vh - 48px);
+}
+
+#trader-search-options {
+	margin-top:  40px;
+	margin-left: 20px;
+}
