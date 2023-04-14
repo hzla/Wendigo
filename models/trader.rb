@@ -12,13 +12,15 @@ class Trader < ActiveRecord::Base
 	end
 
 
-	def self.search params
-		std = params["std"] or 0
-		min_profit = params["min_profit"] or 0
 
 
-		initial_filtered_traders = Trader.where()
-
+	def self.stats_for_time_period start, finish
+		traders = {}
+		all.each_with_index do |trader, i|
+			p i
+			traders[trader.id] = trader.get_stats_for_time_period
+		end
+		traders
 	end
 
 	def get_stats_for_time_period start=0, finish=1681506810
@@ -90,6 +92,41 @@ class Trader < ActiveRecord::Base
 		#pnl 2 decimals
 		update pnl: current_pnl, pnl_percentage: current_pnl_percentage, max_size: max_size, trade_count: ordered_trades.length, max_size: max_size, std: std
 	end
+
+	def self.search params
+		start = params["start"] or 0
+		finish = params["finish"] or Time.now.to_i
+
+
+		trader_stats = stats_for_time_period start, finish
+
+		
+		min_trade_count = params["trade_count"] 
+		min_winrate = params["winrate"] 
+		min_pnl = params["pnl"] 
+		min_pnl_percentage = params["pnl_percentage"] 
+
+
+		matches = []
+		result = []
+
+		trader_stats.each do |id, stats|
+			next if stats[:pnl] < min_pnl
+			next if stats[:pnl_percentage] < min_pnl_percentage
+			next if stats[:trade_count] < min_trade_count 
+			next if stats[:winrate] < min_winrate
+
+			matches << id
+		end
+
+		matched_traders = find(matches)
+		
+		matches.each_with_index do |id, i|
+			result << [matched_traders[i], trader_stats[id]]
+		end
+
+		result
+	end
 end
 
 
@@ -104,11 +141,10 @@ time period
 
 
 std
-min profit
 min trade count
 min win rate
 
-
+params = {"pnl" => 0, "trade_count" => 2, "pnl_percentage" => 0, "winrate" => 0}
 
 
 
