@@ -2,6 +2,9 @@ class Trade < ActiveRecord::Base
 	belongs_to :user
 	has_many :actions
 
+	scope :created_between, lambda {|start, finish| where("timestamp >= ? AND timestamp <= ?", start, finish )}
+
+
 
 	def self.clear
 		Trade.destroy_all
@@ -34,7 +37,8 @@ class Trade < ActiveRecord::Base
 					size: trade["size"],
 					collateral: trade["collateral"],
 					size_delta: trade["sizeDelta"],
-					collateral_delta: trade["collateralDelta"]
+					collateral_delta: trade["collateralDelta"],
+					timestamp: trade["timestamp"]
 				)
 
 				# Add individual trade actions
@@ -67,6 +71,7 @@ class Trade < ActiveRecord::Base
 									price: action["averagePrice"].to_i,
 									timestamp: action["timestamp"]
 								)
+								full_trade.update closed_at: action["timestamp"]
 							else #liquidation
 								action = trade[action_type]
 

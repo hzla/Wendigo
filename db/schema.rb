@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_14_204115) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_14_210803) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,6 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_14_204115) do
     t.float "collateral"
     t.float "size_delta"
     t.float "collateral_delta"
+    t.integer "closed_at"
   end
 
 end

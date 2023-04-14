@@ -10,6 +10,13 @@ class Trader < ActiveRecord::Base
 			trader.update_stats
 		end
 	end
+
+	def self.get_pnl_for_time_period start, finish
+		ordered_trades = trades.created_between(start, finish)
+
+	end
+
+
 	
 	def update_stats
 		ordered_trades = trades.order(timestamp: :asc)
