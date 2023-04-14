@@ -41,15 +41,18 @@ section {
 	background: radial-gradient(28.02% 194.12% at 56.22% 248.04%, rgba(104, 119, 255, 0.1) 0%, rgba(104, 119, 255, 0) 100%), radial-gradient(31% 214.71% at 88.97% 189.22%, rgba(149, 159, 255, 0.1) 0%, rgba(149, 159, 255, 0) 100%), radial-gradient(275.49% 679.7% at 2.11% 300%, rgba(29, 155, 222, 0.1) 0%, rgba(29, 155, 222, 0) 100%), rgb(9, 10, 16);
     background-blend-mode: soft-light, normal, normal, normal, normal, normal;
     height: 51px;
-    display: flex;
-    flex-direction: row;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
+    line-height:  51px;
+    text-align: center;
     -webkit-box-align: center;
     align-items: center;
     border-bottom: 1px solid rgb(20, 25, 41);
     padding: 0px 16px;
     font-size:  20px;
+}
+
+.section-body {
+	padding: 16px;
+	min-height: 300px;
 }
 
 #filter-bar {
@@ -58,9 +61,102 @@ section {
 	top:  48px;
 	width: 30vw;
 	height:  calc(100vh - 48px);
+	font-size: 16px;
 }
 
 #trader-search-options {
 	margin-top:  40px;
 	margin-left: 20px;
 }
+
+#trader-results {
+	margin-top: 40px;
+	margin-left: 20px;
+	width: calc(100% - 40px);
+}
+
+
+#content {
+	position: fixed;
+	right:  0;
+	width:  70vw;
+	top:  48px;
+	height:  calc(100vh - 48px);
+}
+
+
+
+/********** FILTER BAR   */
+
+.filter-row {
+	width:  100%;
+	margin: 10px 4px;
+	display: flex;
+	justify-content: space-between;
+	height: 32px;
+	line-height: 32px;
+}
+
+.filter-field {
+	border: 1px solid rgb(20, 25, 41);
+	border-radius: 4px;
+	background: none;
+	color:  white;
+	text-align: right;
+}
+
+#submit-search {
+	margin-top: 20px;
+	background: rgb(85, 182, 255);
+	text-align: center;
+	height: 32px;
+	line-height:  32px;
+	width: 160px;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+/********** Trader Table   */
+
+
+#trader-table {
+	width: 100%;
+}
+
+.trader-table-header {
+	width:  100%;
+	display: flex;
+	justify-content: space-between;
+	color: rgb(173, 184, 216);
+	font-weight: 500;
+	font-size: 16px;
+}
+
+.trader-table-header div {
+	cursor: pointer;
+	min-width: 90px;
+}
+
+.trader-table-row div {
+	min-width:  90px;
+}
+
+.adr {
+	width:  380px;
+}
+
+.trader-table-row {
+	display: flex;
+	justify-content: space-between;
+	margin-top:  10px;
+	font-size: 16px;
+}
+
+
+
+
+
+
+
+
+
