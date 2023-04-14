@@ -11,9 +11,38 @@ class Trader < ActiveRecord::Base
 		end
 	end
 
-	def self.get_pnl_for_time_period start, finish
-		ordered_trades = trades.created_between(start, finish)
 
+	def self.search params
+		std = params["std"] or 0
+		min_profit = params["min_profit"] or 0
+
+
+		initial_filtered_traders = Trader.where()
+
+	end
+
+	def get_stats_for_time_period start=0, finish=1681506810
+		found_trades = trades.closed_between(start, finish)
+
+		pnl = 0
+		pnl_percentage = 0
+		wins = 0
+		losses = 0
+
+		found_trades.each do |trade|
+			pnl += trade.pnl
+			pnl_percentage += trade.pnl_percentage
+
+			if trade.pnl > 0 
+				wins += 1
+			else
+				losses += 1
+			end
+		end
+
+		winrate = wins.to_f / found_trades.length
+
+		{pnl: pnl, pnl_percentage: pnl_percentage, winrate: winrate, trade_count: found_trades.length}
 	end
 
 
@@ -42,8 +71,6 @@ class Trader < ActiveRecord::Base
 		end
 
 		# get std of returns
-		
-
 		if closed_trades < 2
 			std = 0
 		else
@@ -67,6 +94,21 @@ end
 
 
 =begin
+
+SEARCH CRITIERIA
+
+
+pnl 
+pnl percentage 
+time period
+
+
+std
+min profit
+min trade count
+min win rate
+
+
 
 
 

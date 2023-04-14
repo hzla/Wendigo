@@ -2,7 +2,7 @@ class Trade < ActiveRecord::Base
 	belongs_to :user
 	has_many :actions
 
-	scope :created_between, lambda {|start, finish| where("timestamp >= ? AND timestamp <= ?", start, finish )}
+	scope :closed_between, lambda {|start, finish| where("closed_at >= ? AND closed_at <= ?", start, finish )}
 
 
 
