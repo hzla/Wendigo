@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_14_191833) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_14_200406) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_14_191833) do
     t.float "max_size", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "pnl_percentage"
   end
 
   create_table "trades", force: :cascade do |t|
@@ -61,6 +62,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_14_191833) do
     t.integer "pnl_percentage"
     t.float "pnl"
     t.integer "current_pnl_percentage"
+    t.float "size"
+    t.float "collateral"
+    t.float "size_delta"
+    t.float "collateral_delta"
   end
 
 end
