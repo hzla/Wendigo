@@ -7,3 +7,5 @@ gem "rake"
 gem "sinatra-activerecord"    
 gem 'pry'
 gem 'dotenv'
+gem 'ethereum.rb'
+gem 'httparty'

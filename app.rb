@@ -3,6 +3,8 @@ require 'sinatra/reloader'
 require 'sinatra/json'
 require 'sinatra/activerecord'
 require 'pry'
+require 'ethereum.rb'
+require 'httparty'
 
 Dir["models/*.rb"].each {|file| require_relative file}
 
@@ -23,11 +25,19 @@ end
 get '/position' do 
   @user = User.first
 
-  @positions = @user.copy_list || []
+  copy_list = @user.copy_list || []
+
+  @positions = []
+
+  gmx_client = Gmx.new
+
+  copy_list.each do |adr|
+    @positions << gmx_client.positions(adr)
+  end
+
+  p @positions
 
   erb :position
-
-
 end
 
 
