@@ -14,7 +14,7 @@ class Trade < ActiveRecord::Base
 
 
 	def self.load_to_db
-		(95..96).each do |n|
+		(90..100).each do |n|
 			trades = JSON.parse(File.read("lib/trades/#{n}.json"))
 		
 			trades.each do |trade|
