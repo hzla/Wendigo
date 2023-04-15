@@ -4,6 +4,14 @@ html {
     background: #08090f;
 } 
 
+.green {
+	color: rgb(102, 255, 164) !important;
+}
+
+.red {
+	color:  rgb(255, 105, 102) !important;
+}
+
 div {
 	box-sizing:  border-box;
 }

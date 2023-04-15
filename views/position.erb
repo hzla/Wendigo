@@ -74,7 +74,7 @@
 									<div class="direction <%= direction %>"><%= direction %></div>
 									<div class="collat"><%= pos_data["collateral"] %></div>
 									<div class="size"><%= pos_data["size"] %></div>
-									<div class="pnl"><%= pos_data["delta"] %></div>
+									<div class="pnl <%= 'green' if pos_data["delta"] > 0  %>"><%= pos_data["delta"] %></div>
 									<div class="allocation"></div>
 									
 								</div>

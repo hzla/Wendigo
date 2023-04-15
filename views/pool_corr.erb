@@ -10,7 +10,7 @@
 				<div id="trader-table-body">
 					<% @results[:pool1_in_pool2_adrs].each do |adr| %>
 						<div class="trader-table-row">
-							<div class="adr"><%= adr %></div>
+							<div class="adr"><a href="https://arbiscan.io/address/<%= adr %> %>" target="_blank"><%= adr %><a></div>
 						</div>
 					<% end %>
 				</div>
@@ -29,7 +29,7 @@
 				<div id="trader-table-body">
 					<% @results[:pool2_in_pool1_adrs].each do |adr| %>
 						<div class="trader-table-row">
-							<div class="adr"><%= adr %></div>
+							<div class="adr"><a href="https://arbiscan.io/address/<%= adr %> %>" target="_blank"><%= adr %><a></div>
 						</div>
 					<% end %>
 				</div>

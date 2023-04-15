@@ -3,7 +3,7 @@
 	<% stats = result[1] %>
 
 	<div class="trader-table-row">
-		<div class="adr"><%= trader.address %></div>
+		<div class="adr"><a href="https://www.gmx.house/arbitrum/account/<%=trader.address %>" target="_blank"><%= trader.address %></a></div>
 		<div class="pnl"><%= (stats[:pnl] / 10**30).to_i %></div>
 		<div class="pnl_perc"><%= (stats[:pnl_percentage] / 100.0).round(2) %></div>
 		<div class="winrate"><%= (stats[:winrate] * 100).round(2) %>%</div>
