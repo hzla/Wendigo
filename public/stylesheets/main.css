@@ -140,13 +140,14 @@ section {
 }
 
 .trader-table-header {
-	width:  calc(100% - 30px);
+	width:  100%;
 	display: flex;
 	justify-content: space-between;
 	color: rgb(173, 184, 216);
 	font-weight: 500;
 	font-size: 16px;
 	position: absolute;
+	top:  -16px;
 }
 
 .trader-table-header div {
@@ -164,6 +165,28 @@ section {
 .adr {
 	width:  380px;
 	font-size: 12px;
+	cursor:  pointer;
+	position:  relative;
+}
+
+.adr span {
+	display:  none;
+	cursor:  pointer;
+	background: #ff5555;
+	border-radius: 2px;
+	text-align: center;
+	position: absolute;
+    padding: 0px 4px;
+    right: 0;
+    top: -8px;
+    height: 24px;
+    line-height: 24px;
+
+}
+
+.adr:hover span {
+	display: inline;
+
 }
 
 .trader-table-row {

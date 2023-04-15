@@ -41,3 +41,13 @@ class Gmx
 		formatted
 	end
 end
+
+
+=begin
+tracklist 
+["0x367f7def4c05f4ae7ae47f88e270f8c0c85a9273",
+"0x48202a51c0d5d81b3ebed55016408a0e0a0afaae",
+"0xb7a98544083a5f6dd3bcf267aba5a714e3f515f4",
+"0x7b7736a2c07c4332ffad45a039d2117ae15e3f66"]
+
+=end

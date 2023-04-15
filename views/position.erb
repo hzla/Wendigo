@@ -22,20 +22,42 @@
 			<div id="trader-table">
 				
 					
-				</div>
+
 
 				<div class="trader-table-header">
 					<div class="adr">Address</div>
 					<div class="asset">Asset</div>
-					<div class="direction">Direction</div>
-					<div class="collat">Collateral</div>
+					<div class="direction">Dir</div>
+					<div class="collat">Margin</div>
 					<div class="size">Size</div>
 					<div class="pnl">PnL</div>
-					<div class="allocation">Allocation</div>
+					<div class="allocation">Alloc %</div>
 				</div>
 
 				<div id="trader-table-body">
 
+					<% @positions.each_with_index do |pos, i| %>
+
+						<% ["btc", "eth"].each do |asset| %>
+							<% ["Long", "Short"].each do |direction| %>
+								<% next if pos["#{asset}#{direction}"] == {}  %>
+								<% pos_data = pos["#{asset}#{direction}"] %>
+
+								<div class="trader-table-row" data-pos-id="<%= i %>">
+									<div class="adr"><%= pos["adr"] %> <span class="del-trader">Delete</span></div>
+									<div class="asset"><%= asset %></div>
+									<div class="direction <%= direction %>"><%= direction %></div>
+									<div class="collat"><%= pos_data["collateral"] %></div>
+									<div class="size"><%= pos_data["size"] %></div>
+									<div class="pnl"><%= pos_data["delta"] %></div>
+									<div class="allocation"><%= @user.allocations[i] %></div>
+								</div>
+							<% end %>
+						<% end %>
+
+						
+
+					<% end%>
 					
 
 

@@ -32,7 +32,9 @@ get '/position' do
   gmx_client = Gmx.new
 
   copy_list.each do |adr|
-    @positions << gmx_client.positions(adr)
+    position_data = gmx_client.positions(adr)
+    position_data["adr"] = adr
+    @positions << position_data
   end
 
   p @positions
