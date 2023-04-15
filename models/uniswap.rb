@@ -44,20 +44,15 @@ class Uniswap
 	  {data: parsed_response, next: parsed_response.last["timestamp"]}
 	end
 
-	def self.get_balance_weighted_avg_cost_basis pool, token, decimals=18
+	def self.get_balance_weighted_avg_cost_basis pool, token, bounds, decimals=18
 		
 		swaps = get_all_swaps pool
 
-		accounts = {
-
-		}
-
-		acc_count = 0
+		accounts = {}
 
 		swaps.each do |swap|
 			
 			if !accounts[swap["account"]["id"]] #new account
-				acc_count += 1
 				accounts[swap["account"]["id"]] = {}
 				accounts[swap["account"]["id"]]["usd_spent"] = 0
 				accounts[swap["account"]["id"]]["token_bought"] = 0
@@ -87,7 +82,29 @@ class Uniswap
 			end
 		end
 
-		
+		total_bought = 0
+		total_spent = 0
+
+
+
+		accounts.each do |adr, data|
+			next if !data["has_bought"] or data["bought_and_unsold"] <= 0
+
+
+
+			
+			data["cost_basis"] = data["usd_spent"] / data["token_bought"]
+
+			# filter out weird data
+			next if data["cost_basis"] < bounds[0] or data["cost_basis"] > bounds[1]
+
+
+
+			total_bought += data["bought_and_unsold"]
+			total_spent += data["cost_basis"] * data["bought_and_unsold"]
+
+		end
+		total_spent / total_bought
 	end 
 
 	def self.get_correlation pool1, pool2
@@ -127,7 +144,7 @@ end
 
 Uniswap.get_all_swaps("0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286")
 
-Uniswap.get_balance_weighted_avg_cost_basis "0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286", "0x0c4681e6c0235179ec3d4f4fc4df3d14fdd96017"
+Uniswap.get_balance_weighted_avg_cost_basis "0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286", "0x0c4681e6c0235179ec3d4f4fc4df3d14fdd96017", [.26, .51]
 
 constrcut hash with accoutn as key: value as follows:
 {
