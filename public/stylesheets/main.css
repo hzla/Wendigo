@@ -4,6 +4,10 @@ html {
     background: #08090f;
 } 
 
+div {
+	box-sizing:  border-box;
+}
+
 a {
 	text-decoration: none;
 	color:  white;
@@ -126,6 +130,7 @@ section {
 
 #trader-table {
 	width: 100%;
+	position:  relative;
 }
 
 #trader-table-body {
@@ -142,7 +147,6 @@ section {
 	font-weight: 500;
 	font-size: 16px;
 	position: absolute;
-	top:  80px;
 }
 
 .trader-table-header div {
@@ -167,6 +171,35 @@ section {
 	justify-content: space-between;
 	margin-top:  10px;
 	font-size: 16px;
+}
+
+#table-input {
+	display: flex;
+	height: 32px;
+	margin-top: 12px;
+	margin-bottom: 24px;
+}
+
+#trader-add {
+    color: rgb(173, 184, 219);
+    height: 32px;
+    padding: 0.5rem 1rem;
+    border: 0.5px solid rgb(27, 34, 56);
+    border-radius: 0.5rem;
+    background-color: rgb(20, 25, 41);
+    transition: border 200ms ease 0s;
+    width: 400px;
+    margin-right: 40px;
+}
+
+#add-trader-btn {
+	background: rgb(85, 182, 255);
+	text-align: center;
+	height: 32px;
+	line-height:  32px;
+	width: 100px;
+	cursor: pointer;
+	border-radius: 4px;
 }
 
 

@@ -23,7 +23,9 @@ end
 get '/position' do 
   @user = User.first
 
-  @positions = User.copy_list
+  @positions = @user.copy_list || []
+
+  erb :position
 
 
 end

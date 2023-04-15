@@ -1,42 +1,9 @@
 <div id="filter-bar">
 	
 	<section id="trader-search-options">
-		<div class="section-header">Search Options</div>
+		<div class="section-header">Your Recommended Position</div>
 		<div class="section-body">
-			<div class="filter-row">
-				<div class="filter-label">Time Start</div>
-				<input class="filter-field" id="time-start" placeholder=0>
-			</div>
-
-			<div class="filter-row">
-				<div class="filter-label">Time End</div>
-				<input class="filter-field" id="time-end" >
-			</div>
-
-
-			<div class="filter-row">
-				<div class="filter-label">Minimum PnL</div>
-				<input class="filter-field" id="min-pnl" placeholder=0>
-			</div>
-
-			<div class="filter-row">
-				<div class="filter-label">Minimum PnL %</div>
-				<input class="filter-field" id="min-pnl-perc" placeholder=0>
-			</div>
-
-			<div class="filter-row">
-				<div class="filter-label">Minimum Win %</div>
-				<input class="filter-field" id="min-win" placeholder=0>
-			</div>
-
-			<div class="filter-row">
-				<div class="filter-label">Minimum Trade Count</div>
-				<input class="filter-field" id="min-trade" placeholder=1>
-			</div>
-
-			<div id="submit-search">
-				Search
-			</div>
+			
 		</div>
 	</section>
 </div>
@@ -44,19 +11,29 @@
 <div id="content">
 
 	<section id="trader-results">
-		<div class="section-header">Traders</div>
+		<div class="section-header">Copy List</div>
 		<div class="section-body">
+
+			<div id="table-input">
+				<input id="trader-add" placeholder="Address 0x...">
+				<div id="add-trader-btn">Add</div>
+			</div>
+			
 			<div id="trader-table">
+				
+					
+				</div>
+
 				<div class="trader-table-header">
 					<div class="adr">Address</div>
+					<div class="asset">Asset</div>
+					<div class="direction">Direction</div>
 					<div class="pnl">PnL</div>
-					<div class="pnl_perc">PnL %</div>
-					<div class="winrate">Win Rate</div>
-					<div class="trade_count"># Trades</div>
-					<div class="std">STD</div>
+					<div class="allocation">Allocation</div>
 				</div>
 
 				<div id="trader-table-body">
+
 					
 
 
