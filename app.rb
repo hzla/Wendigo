@@ -19,6 +19,16 @@ get '/' do
   erb :index
 end
 
+
+get '/position' do 
+  @user = User.first
+
+  @positions = User.copy_list
+
+
+end
+
+
 post '/search' do 
   p params
 

@@ -35,6 +35,9 @@ a {
 section {
 	border-radius: 8px;
     border: 1px solid rgb(20, 25, 41);
+    height: calc(100% - 20vh);
+    position: relative;
+    overflow: scroll;
 }
 
 .section-header {
@@ -125,18 +128,29 @@ section {
 	width: 100%;
 }
 
+#trader-table-body {
+	height: 100%;
+	overflow:  scroll;
+	margin-top: 32px;
+}
+
 .trader-table-header {
-	width:  100%;
+	width:  calc(100% - 30px);
 	display: flex;
 	justify-content: space-between;
 	color: rgb(173, 184, 216);
 	font-weight: 500;
 	font-size: 16px;
+	position: absolute;
+	top:  80px;
 }
 
 .trader-table-header div {
 	cursor: pointer;
 	min-width: 90px;
+}
+.trader-table-header .adr {
+	font-size: 16px;
 }
 
 .trader-table-row div {
@@ -145,6 +159,7 @@ section {
 
 .adr {
 	width:  380px;
+	font-size: 12px;
 }
 
 .trader-table-row {
