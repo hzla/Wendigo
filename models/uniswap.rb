@@ -10,7 +10,7 @@ class Uniswap
 	def self.get_swaps pool, first, last_timestamp
 
 		query ="{
-  		liquidityPool(id: \"0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286\") {
+  		liquidityPool(id: \"#{pool}\") {
 	      swaps(where: {timestamp_lt: #{last_timestamp}}, orderBy: timestamp, orderDirection: desc, first: #{first}) {
 		      hash
 		      timestamp
@@ -44,8 +44,7 @@ class Uniswap
 	  {data: parsed_response, next: parsed_response.last["timestamp"]}
 	end
 
-	def self.get_balance_weighted_avg_cost_basis pool, token, bounds, decimals=18
-		
+	def self.account_info pool, token, decimals=18
 		swaps = get_all_swaps pool
 
 		accounts = {}
@@ -82,24 +81,21 @@ class Uniswap
 			end
 		end
 
+		accounts
+	end
+
+	def self.get_balance_weighted_avg_cost_basis pool, token, bounds, decimals=18
+		accounts = account_info pool, token, decimals
+
 		total_bought = 0
 		total_spent = 0
 
-
-
 		accounts.each do |adr, data|
-			next if !data["has_bought"] or data["bought_and_unsold"] <= 0
-
-
-
-			
+			next if !data["has_bought"] or data["bought_and_unsold"] <= 0			
 			data["cost_basis"] = data["usd_spent"] / data["token_bought"]
 
 			# filter out weird data
 			next if data["cost_basis"] < bounds[0] or data["cost_basis"] > bounds[1]
-
-
-
 			total_bought += data["bought_and_unsold"]
 			total_spent += data["cost_basis"] * data["bought_and_unsold"]
 
@@ -107,9 +103,57 @@ class Uniswap
 		total_spent / total_bought
 	end 
 
-	def self.get_correlation pool1, pool2
+	def self.get_correlation pool1,  pool2
+		accounts1 = account_info pool1["adr"], pool1["token"]
+		accounts2 = account_info pool2["adr"], pool2["token"]
+
+		#number of accounts with unsold balances after buying
+		pool1_unsold_count = 0
+		pool2_unsold_count = 0
+		
+
+		pool1_in_pool2 = 0
+		pool1_in_pool2_adrs = []
+
+		pool2_in_pool1 = 0
+		pool2_in_pool1_adrs = []
+
+
+
+		accounts1.each do |adr, data|
+			if data["bought_and_unsold"] > 0
+				pool1_unsold_count += 1
+
+				if accounts2[adr] and accounts2[adr]["bought_and_unsold"] > 0
+					pool1_in_pool2 += 1
+					pool1_in_pool2_adrs << adr
+				end
+			end
+		end
+
+		accounts2.each do |adr, data|
+			if data["bought_and_unsold"] > 0
+				pool2_unsold_count += 1
+
+				if accounts1[adr] and accounts1[adr]["bought_and_unsold"] > 0
+					pool1_in_pool2 += 1
+					pool1_in_pool2_adrs << adr
+				end
+			end
+		end
+
+		results = {}
+
+		results[:pool_1_2_correlation] = pool1_in_pool2 / pool1_unsold_count.to_f
+		results[:pool_2_1_correlation] = pool2_in_pool1 / pool2_unsold_count.to_f
+		results[:pool1_in_pool2_adrs] = pool1_in_pool2_adrs 
+		results[:pool2_in_pool1_adrs] = pool2_in_pool1_adrs 
+
+		results
+
 
 	end
+
 
 	def self.get_all_swaps pool
 		if File.exists?("./swaps/#{pool}.json")
@@ -127,7 +171,9 @@ class Uniswap
 				response_count = swaps[:data].length
 				last_timestamp = swaps[:next]
 				all_swaps += swaps[:data]
+				p response_count
 			rescue #prob timeout or something
+				p "timeout"
 				break
 			end
 		end
@@ -142,9 +188,17 @@ end
 
 =begin
 
-Uniswap.get_all_swaps("0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286")
+Uniswap.get_all_swaps("0xa6e376c6c2B5739085671a8937eb233eA7f598Ce")
 
-Uniswap.get_balance_weighted_avg_cost_basis "0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286", "0x0c4681e6c0235179ec3d4f4fc4df3d14fdd96017", [.26, .51]
+Uniswap.get_balance_weighted_avg_cost_basis "0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286", "0x0c4681e6c0235179ec3d4f4fc4df3d14fdd96017", [.13, 1.45]
+
+Uniswap.get_balance_weighted_avg_cost_basis "0xa6e376c6c2B5739085671a8937eb233eA7f598Ce", "0x2f27118e3d2332afb7d165140cf1bb127ea6975d", [.13, 1.45]
+
+
+pool1 = {"adr" => "0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286", "token" => "0x0c4681e6c0235179ec3d4f4fc4df3d14fdd96017"}
+
+pool2 = {"adr" => "0xa6e376c6c2B5739085671a8937eb233eA7f598Ce", "token" => "0x2f27118e3d2332afb7d165140cf1bb127ea6975d"}
+Uniswap.get_correlation pool1, pool2
 
 constrcut hash with accoutn as key: value as follows:
 {
