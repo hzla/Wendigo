@@ -177,6 +177,7 @@ section {
 	width:  90px;
 	border: 1px solid white;
 	border-radius:  2px;
+	text-align: center;
 }
 
 
@@ -191,7 +192,7 @@ section {
 	position:  relative;
 }
 
-.adr span {
+.adr .del-trader {
 	display:  none;
 	cursor:  pointer;
 	background: #ff5555;
@@ -203,10 +204,24 @@ section {
     top: 4px;
     height: 24px;
     line-height: 24px;
-
 }
 
-.adr:hover span {
+.adr .update-allo {
+	display:  none;
+	cursor:  pointer;
+	background: rgb(85, 182, 255);
+	border-radius: 2px;
+	text-align: center;
+	position: absolute;
+    padding: 0px 4px;
+    right: -180;
+    top: 4px;
+    height: 24px;
+    line-height: 24px;
+    width: 160px;
+}
+
+.trader-table-row:hover span {
 	display: inline;
 
 }

@@ -50,7 +50,13 @@
 
 					<% @positions.each_with_index do |pos, i| %>
 						<div class="trader-table-row table-sub-header">
-							<div class="adr"><%= pos["adr"] %> <span class="del-trader" data-pos-id="<%= i %>">Delete</span></div>
+							<div class="adr">
+								<%= pos["adr"] %>
+								<span class="del-trader" data-pos-id="<%= i %>">Delete</span>
+								<span class="update-allo" data-pos-id="<%= i %>">Update Allocation</span>
+							</div>
+							
+							<input class="allocation" value="<%= @user.allocations[i] %>">
 						</div>
 
 						<% ["btc", "eth"].each do |asset| %>
@@ -65,7 +71,8 @@
 									<div class="collat"><%= pos_data["collateral"] %></div>
 									<div class="size"><%= pos_data["size"] %></div>
 									<div class="pnl"><%= pos_data["delta"] %></div>
-									<input class="allocation" value="<%= @user.allocations[i] %>">
+									<div class="allocation"></div>
+									
 								</div>
 							<% end %>
 						<% end %>

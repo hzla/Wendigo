@@ -49,5 +49,16 @@ $(document).ready(function() {
 	 	})
 	})
 
+	$(".update-allo").on('click', function() {
+	 	var data = {}
+
+	 	data["index"] = $(this).attr('data-pos-id')
+	 	data["allo"] = $(this).parents(".table-sub-header").find('.allocation').val()
+	 	console.log(data)
+	 	$.post("/user/allocations", data, function(data) {
+	 		console.log(data)
+	 	})
+	})
+
 
 })

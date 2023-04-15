@@ -14,6 +14,12 @@ configure :development do
   set :database, {adapter: "postgresql", database: "wendigo"}
 end
 
+before do
+  session[:user_id] = 1
+  @user = User.find session[:user_id]
+end
+
+########## POSITIONS ###################
 
 get '/' do   
   erb :index
@@ -21,7 +27,7 @@ end
 
 
 get '/position' do 
-  @user = User.first
+  # @user = User.first
   copy_list = @user.copy_list || []
   @positions = @user.copied_positions
   @recced_position = @user.recced_position @positions
@@ -35,16 +41,24 @@ post '/search' do
   erb :trader_results, layout: false
 end
 
-post '/user/copy_list/add' do
-  @user = User.first
-  @user.update(copy_list: (@user.copy_list + [params["adr"]]), allocations: (@user.allocations + [0]))
+######### USER UPDATES ################ 
 
+post '/user/copy_list/add' do
+  @user.update(copy_list: (@user.copy_list + [params["adr"]]), allocations: (@user.allocations + [0]))
   return 200
 end
 
+post '/user/allocations' do
+  allo = @user.allocations
+
+  p params
+  
+  allo[params["index"].to_i] = params["allo"].to_i
+  @user.update allocations: allo
+  return 200
+end
 
 post '/user/copy_list/del' do
-  @user = User.first
   list = @user.copy_list
   allos = @user.allocations
 
