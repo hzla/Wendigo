@@ -101,10 +101,10 @@ class Trader < ActiveRecord::Base
 		trader_stats = stats_for_time_period start, finish
 
 		
-		min_trade_count = params["trade_count"] 
-		min_winrate = params["winrate"] 
-		min_pnl = params["pnl"] 
-		min_pnl_percentage = params["pnl_percentage"] 
+		min_trade_count = params["trade_count"].to_i 
+		min_winrate = params["winrate"].to_i / 100.0 
+		min_pnl = params["pnl"].to_i * 10**30
+		min_pnl_percentage = params["pnl_percentage"].to_i * 100
 
 
 		matches = []

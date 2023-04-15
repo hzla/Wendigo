@@ -17,3 +17,16 @@ get '/' do
   erb :index
 end
 
+post '/search' do 
+  p params
+
+  @results = Trader.search params
+
+  erb :trader_results, layout: false
+end
+
+
+get '/set_user/:id'
+
+end
+
