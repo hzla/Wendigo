@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_14_210803) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_15_003221) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,6 +30,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_14_210803) do
     t.float "fee"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["trade_id"], name: "index_actions_on_trade_id"
+    t.index ["trader_id"], name: "index_actions_on_trader_id"
   end
 
   create_table "traders", force: :cascade do |t|
@@ -68,6 +70,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_14_210803) do
     t.float "size_delta"
     t.float "collateral_delta"
     t.integer "closed_at"
+    t.index ["trader_id"], name: "index_trades_on_trader_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "address"
+    t.string "copy_list", array: true
   end
 
 end

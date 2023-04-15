@@ -6,6 +6,8 @@ require 'pry'
 
 Dir["models/*.rb"].each {|file| require_relative file}
 
+enable :sessions
+
 configure :development do 
   set :database, {adapter: "postgresql", database: "wendigo"}
 end
@@ -26,7 +28,7 @@ post '/search' do
 end
 
 
-get '/set_user/:id'
+get '/set_user/:id' do
 
 end
 
