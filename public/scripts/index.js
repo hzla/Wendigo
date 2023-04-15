@@ -27,9 +27,26 @@ $(document).ready(function() {
 			$('#submit-search').text("Search")
 			$('#trader-table-body').html(data)
 		})
+	})
 
+	$("#add-trader-btn").on('click', function() {
+	 	var data = {}
 
+	 	data["adr"] = $("#trader-add").val()
 
+	 	$.post("/user/copy_list/add", data, function(data) {
+	 		location.reload()
+	 	})
+	})
+
+	$(".del-trader").on('click', function() {
+	 	var data = {}
+
+	 	data["index"] = $(this).attr('data-pos-id')
+	 	console.log(data)
+	 	$.post("/user/copy_list/del", data, function(data) {
+	 		location.reload()
+	 	})
 	})
 
 

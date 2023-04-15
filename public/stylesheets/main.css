@@ -150,6 +150,14 @@ section {
 	top:  -16px;
 }
 
+.table-sub-header {
+	background: rgb(20, 25, 41);
+	height: 32px;
+	line-height: 32px;
+	font-size:  16px;
+	margin-top: 12px;
+}
+
 .trader-table-header div {
 	cursor: pointer;
 	min-width: 90px;
@@ -171,6 +179,11 @@ section {
 	border-radius:  2px;
 }
 
+
+.table-sub-header .adr {
+	font-size: 14px;
+	width:  440px;
+}
 .adr {
 	width:  380px;
 	font-size: 12px;
@@ -187,7 +200,7 @@ section {
 	position: absolute;
     padding: 0px 4px;
     right: 0;
-    top: -8px;
+    top: 4px;
     height: 24px;
     line-height: 24px;
 

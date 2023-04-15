@@ -37,7 +37,7 @@ end
 
 post '/user/copy_list/add' do
   @user = User.first
-  @user.update copy_list: (@user.copy_list + [params["address"])
+  @user.update(copy_list: (@user.copy_list + [params["adr"]]), allocations: (@user.allocations + [0]))
 
   return 200
 end
@@ -48,12 +48,10 @@ post '/user/copy_list/del' do
   list = @user.copy_list
   allos = @user.allocations
 
-  list.each_with_index do |adr, i|
-    if adr == params["address"]
-      list.delete_at(i)
-      allos.delete_at(i)
-    end
-  end
+  idx = params["index"].to_i
+
+  list.delete_at(idx)
+  allos.delete_at(idx)
 
   @user.update copy_list: list, allocations: allos
   return 200
