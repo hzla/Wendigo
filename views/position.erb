@@ -3,7 +3,10 @@
 	<section id="trader-search-options">
 		<div class="section-header">Your Recommended Position</div>
 		<div class="section-body">
-			
+			<div class="filter-row trade-sizing">
+				<div class="filter-label">Your Max Trade Size</div>
+				<input class="filter-field" id="max-trade" value="<%= @user.max_trade_size %>">
+			</div>	
 		</div>
 	</section>
 </div>
@@ -50,7 +53,7 @@
 									<div class="collat"><%= pos_data["collateral"] %></div>
 									<div class="size"><%= pos_data["size"] %></div>
 									<div class="pnl"><%= pos_data["delta"] %></div>
-									<div class="allocation"><%= @user.allocations[i] %></div>
+									<input class="allocation" value="<%= @user.allocations[i] %>">
 								</div>
 							<% end %>
 						<% end %>
