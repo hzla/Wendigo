@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_15_040901) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_15_044100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -77,8 +77,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_15_040901) do
   create_table "users", force: :cascade do |t|
     t.string "address"
     t.string "copy_list", array: true
-    t.string "allocations", array: true
     t.integer "max_trade_size"
+    t.integer "allocations", array: true
   end
 
 end
