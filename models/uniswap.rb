@@ -1,6 +1,12 @@
 class Uniswap
 
 
+	def self.token_info 
+		{
+			"USDC": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"
+		}
+	end
+
 	def self.get_swaps pool, first, last_timestamp
 
 		query ="{
@@ -38,6 +44,56 @@ class Uniswap
 	  {data: parsed_response, next: parsed_response.last["timestamp"]}
 	end
 
+	def self.get_balance_weighted_avg_cost_basis pool, token, decimals=18
+		
+		swaps = get_all_swaps pool
+
+		accounts = {
+
+		}
+
+		acc_count = 0
+
+		swaps.each do |swap|
+			
+			if !accounts[swap["account"]["id"]] #new account
+				acc_count += 1
+				accounts[swap["account"]["id"]] = {}
+				accounts[swap["account"]["id"]]["usd_spent"] = 0
+				accounts[swap["account"]["id"]]["token_bought"] = 0
+				accounts[swap["account"]["id"]]["has_bought"] = false
+				accounts[swap["account"]["id"]]["bought_and_unsold"] = 0
+				
+				#if its a buy
+				if swap["tokenOut"]["id"] == token
+					accounts[swap["account"]["id"]]["usd_spent"] += swap["amountInUSD"].to_f
+					accounts[swap["account"]["id"]]["token_bought"] = swap["amountOut"].to_f / 10**decimals
+					accounts[swap["account"]["id"]]["has_bought"] = true
+					accounts[swap["account"]["id"]]["bought_and_unsold"] += swap["amountOut"].to_f / 10**decimals
+				end
+			else # account exists
+				#if its a buy
+				if swap["tokenOut"]["id"] == token
+					accounts[swap["account"]["id"]]["usd_spent"] += swap["amountInUSD"].to_f
+					accounts[swap["account"]["id"]]["token_bought"] = swap["amountOut"].to_f / 10**decimals
+					accounts[swap["account"]["id"]]["has_bought"] = true
+					accounts[swap["account"]["id"]]["bought_and_unsold"] += swap["amountOut"].to_f / 10**decimals
+				else #if it's a sell	
+					# we only care if they bought before
+					if  accounts[swap["account"]["id"]]["has_bought"]
+						accounts[swap["account"]["id"]]["bought_and_unsold"] -= swap["amountIn"].to_f / 10**decimals
+					end
+				end
+			end
+		end
+
+		
+	end 
+
+	def self.get_correlation pool1, pool2
+
+	end
+
 	def self.get_all_swaps pool
 		if File.exists?("./swaps/#{pool}.json")
 			return JSON.parse(File.read("./swaps/#{pool}.json"))
@@ -71,6 +127,21 @@ end
 
 Uniswap.get_all_swaps("0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286")
 
+Uniswap.get_balance_weighted_avg_cost_basis "0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286", "0x0c4681e6c0235179ec3d4f4fc4df3d14fdd96017"
+
+constrcut hash with accoutn as key: value as follows:
+{
+	usd_spent int
+	token_bought int
+	has_bought bool
+	token_balance int
+}
+cb for one user is token_bought / usd_spent
+keep track of sum of all tokens bought from pool
+
+calc balance_weighted_avg_cost_basis by adding all cb * share of tokens bought / tokens bought
+
+iterate through swaps
+
 =end
 
-# "{\n  liquidityPool(id: \"0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286\") {\n\t      swaps(where: {timestamp_lt: 10000000000}, orderBy: timestamp, orderDirection: desc, first: 100) {\n\t\t      hash\n\t\t      timestamp\n\t\t      tokenIn {\n\t\t        id\n\t\t      }\n\t\t      amountIn\n\t\t      amountInUSD\n\t\t      tokenOut {\n\t\t        id\n\t\t      }\n\t\t      amountOut\n\t\t      amountOutUSD\n\t\t      account {\n\t\t        id\n\t\t      }\n\t  \t  }\n\t    }\n}\n\n"
