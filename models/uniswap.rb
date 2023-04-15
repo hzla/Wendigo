@@ -100,7 +100,7 @@ class Uniswap
 			total_spent += data["cost_basis"] * data["bought_and_unsold"]
 
 		end
-		total_spent / total_bought
+		{cb: total_spent / total_bought, accounts: accounts}
 	end 
 
 	def self.get_correlation pool1,  pool2

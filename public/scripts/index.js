@@ -70,5 +70,22 @@ $(document).ready(function() {
 	 	})
 	})
 
+	$("#calc-cb").on('click', function() {
+	 	var data = {}
+
+	 	data["adr"] = $('#pool-address').val()
+	 	data["token"] = $('#pool-token').val()
+	 	data["lb"] = $('#pool-lb').val()
+	 	data["ub"] = $('#pool-ub').val()
+
+	 	console.log(data)
+	 	$(this).text("Loading...")
+
+	 	$.post("/avg_cb", data, function(data) {
+	 		$('#calc-cb').text("Calculate")
+			$('#trader-results').html(data)
+	 	})
+	})
+
 
 })

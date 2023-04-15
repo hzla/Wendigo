@@ -39,7 +39,6 @@ a {
 section {
 	border-radius: 8px;
     border: 1px solid rgb(20, 25, 41);
-    height: calc(100% - 20vh);
     position: relative;
     overflow: scroll;
 }
@@ -71,7 +70,7 @@ section {
 	font-size: 16px;
 }
 
-#trader-search-options {
+#trader-search-options, .pool-calc-options {
 	margin-top:  40px;
 	margin-left: 20px;
 }
@@ -114,7 +113,11 @@ section {
 	padding: 8px;
 }
 
-#submit-search, #update-sizing {
+#pool-address, #pool-token {
+	width: 300px;
+}
+
+#submit-search, #update-sizing, #calc-cb, #calc-corr {
 	margin-top: 20px;
 	background: rgb(85, 182, 255);
 	text-align: center;

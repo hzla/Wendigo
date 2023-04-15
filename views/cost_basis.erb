@@ -1,0 +1,33 @@
+<div class="section-header">Cost Basis Data ($<%= @cb %>)</div>
+	<div class="section-body">
+		<div id="trader-table">
+			<div class="trader-table-header">
+				<div class="adr">Address</div>
+				<div class="usd-spent">USD Spent</div>
+				<div class="token-bought">Token Bought</div>
+				<div class="net-buysell">Net Buy/Sell</div>
+				<div class="cost-basis">Cost Basis</div>
+			</div>
+
+			<div id="trader-table-body">
+				<% @accounts.each do |adr, data| %>
+					<% next if data["token_bought"] <= 0 %>
+					<% cb = (data["usd_spent"] / data["token_bought"]).round(2)  %>
+					<% next if cb < @lb or cb > @ub %>
+					
+					<div class="trader-table-row">
+						<div class="adr"><%= adr %></div>
+						<div class="usd-spent"><%= data["usd_spent"].round(2) %></div>
+						<div class="token-bought"><%= data["token_bought"].round(2) %></div>
+						<div class="net-buysell"><%= data["bought_and_unsold"].round(2) %></div>
+						<div class="cost-basis"><%= cb %></div>	
+					</div>
+				<% end %>
+			</div>
+		
+
+		</div>
+
+
+
+</div>

@@ -84,6 +84,19 @@ get '/uni_tools' do
   erb :uni_tools
 end
 
+post '/avg_cb' do 
+  p params
+  result = Uniswap.get_balance_weighted_avg_cost_basis params["adr"], params["token"], [params["lb"].to_f, params["ub"].to_f]
+
+  @lb = params["lb"].to_f
+  @ub = params["ub"].to_f
+  @cb = result[:cb]
+  @accounts = result[:accounts]
+  
+  erb :cost_basis, layout: false
+
+end
+
 
 
 
