@@ -15,44 +15,47 @@ configure :development do
 end
 
 
-get '/' do 
-
-  
+get '/' do   
   erb :index
 end
 
 
 get '/position' do 
   @user = User.first
-
   copy_list = @user.copy_list || []
-
-  @positions = []
-
-  gmx_client = Gmx.new
-
-  copy_list.each do |adr|
-    position_data = gmx_client.positions(adr)
-    position_data["adr"] = adr
-    @positions << position_data
-  end
-
-  p @positions
-
+  @positions = @user.copied_positions
+  @recced_position = @user.recced_position @positions
   erb :position
 end
 
 
 post '/search' do 
-  p params
-
   @results = Trader.search params
 
   erb :trader_results, layout: false
 end
 
+post '/user/copy_list/add' do
+  @user = User.first
+  @user.update copy_list: (@user.copy_list + [params["address"])
 
-get '/set_user/:id' do
+  return 200
+end
 
+
+post '/user/copy_list/del' do
+  @user = User.first
+  list = @user.copy_list
+  allos = @user.allocations
+
+  list.each_with_index do |adr, i|
+    if adr == params["address"]
+      list.delete_at(i)
+      allos.delete_at(i)
+    end
+  end
+
+  @user.update copy_list: list, allocations: allos
+  return 200
 end
 

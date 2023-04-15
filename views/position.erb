@@ -6,6 +6,18 @@
 			<div class="filter-row trade-sizing">
 				<div class="filter-label">Your Max Trade Size</div>
 				<input class="filter-field" id="max-trade" value="<%= @user.max_trade_size %>">
+			</div>
+
+
+
+			<div class="filter-row trade-sizing">
+				<div class="filter-label">BTC</div>
+				<div class="pos-field" id="btc-pos"><%= @recced_position["btc"] %></div>
+			</div>
+
+			<div class="filter-row trade-sizing">
+				<div class="filter-label">ETH</div>
+				<div class="pos-field" id="eth-pos"><%= @recced_position["eth"] %></div>
 			</div>	
 		</div>
 	</section>
@@ -23,9 +35,6 @@
 			</div>
 			
 			<div id="trader-table">
-				
-					
-
 
 				<div class="trader-table-header">
 					<div class="adr">Address</div>
