@@ -51,10 +51,13 @@ end
 post '/user/allocations' do
   allo = @user.allocations
 
-  p params
-  
   allo[params["index"].to_i] = params["allo"].to_i
   @user.update allocations: allo
+  return 200
+end
+
+post '/user/sizing' do
+  @user.update max_trade_size: params["sizing"].to_i
   return 200
 end
 

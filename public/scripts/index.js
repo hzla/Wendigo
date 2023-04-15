@@ -56,7 +56,17 @@ $(document).ready(function() {
 	 	data["allo"] = $(this).parents(".table-sub-header").find('.allocation').val()
 	 	console.log(data)
 	 	$.post("/user/allocations", data, function(data) {
-	 		console.log(data)
+	 		location.reload()
+	 	})
+	})
+
+	$("#update-sizing").on('click', function() {
+	 	var data = {}
+
+	 	data["sizing"] = $('#max-trade').val()
+	 	console.log(data)
+	 	$.post("/user/sizing", data, function(data) {
+	 		location.reload()
 	 	})
 	})
 

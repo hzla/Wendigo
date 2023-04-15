@@ -114,7 +114,7 @@ section {
 	padding: 8px;
 }
 
-#submit-search {
+#submit-search, #update-sizing {
 	margin-top: 20px;
 	background: rgb(85, 182, 255);
 	text-align: center;
