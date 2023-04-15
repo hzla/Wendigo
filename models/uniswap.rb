@@ -37,7 +37,8 @@ class Uniswap
 	  },
 	  body: { 
 	    query: query
-	  }.to_json)
+	  }.to_json,
+	  timeout: 5)
 
 
 	  parsed_response = JSON.parse(response.body)["data"]["liquidityPool"]["swaps"]
@@ -86,7 +87,6 @@ class Uniswap
 
 	def self.get_balance_weighted_avg_cost_basis pool, token, bounds, decimals=18
 		accounts = account_info pool, token, decimals
-
 		total_bought = 0
 		total_spent = 0
 
@@ -190,9 +190,11 @@ end
 
 Uniswap.get_all_swaps("0xa6e376c6c2B5739085671a8937eb233eA7f598Ce")
 
-Uniswap.get_balance_weighted_avg_cost_basis "0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286", "0x0c4681e6c0235179ec3d4f4fc4df3d14fdd96017", [.13, 1.45]
+Uniswap.get_balance_weighted_avg_cost_basis "0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286", "0x0c4681e6c0235179ec3d4f4fc4df3d14fdd96017", [0.26, 0.51]
 
 Uniswap.get_balance_weighted_avg_cost_basis "0xa6e376c6c2B5739085671a8937eb233eA7f598Ce", "0x2f27118e3d2332afb7d165140cf1bb127ea6975d", [.13, 1.45]
+
+Uniswap.get_balance_weighted_avg_cost_basis "0x71414D79633910bBAe5137E8dC152240db8cb5A0", "0x09e18590e8f76b6cf471b3cd75fe1a1a9d2b2c2b", [0, 0.00000000073]
 
 
 pool1 = {"adr" => "0x32B89D2442b4140c052BdBa2Ac6b03BAd7243286", "token" => "0x0c4681e6c0235179ec3d4f4fc4df3d14fdd96017"}

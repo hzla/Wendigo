@@ -86,7 +86,7 @@ end
 
 post '/avg_cb' do 
   p params
-  result = Uniswap.get_balance_weighted_avg_cost_basis params["adr"], params["token"], [params["lb"].to_f, params["ub"].to_f]
+  result = Uniswap.get_balance_weighted_avg_cost_basis params["adr"], params["token"], [params["lb"].to_f, params["ub"].to_f], params["decimals"].to_i
 
   @lb = params["lb"].to_f
   @ub = params["ub"].to_f
@@ -94,6 +94,16 @@ post '/avg_cb' do
   @accounts = result[:accounts]
   
   erb :cost_basis, layout: false
+
+end
+
+post  '/pool_corr' do 
+  p params
+
+  @results = Uniswap.get_correlation params["pool1"], params["pool2"]
+
+
+  erb :pool_corr, layout: false
 
 end
 

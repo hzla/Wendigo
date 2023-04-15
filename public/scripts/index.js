@@ -74,16 +74,39 @@ $(document).ready(function() {
 	 	var data = {}
 
 	 	data["adr"] = $('#pool-address').val()
-	 	data["token"] = $('#pool-token').val()
+	 	data["token"] = $('#pool-token').val().toLowerCase()
 	 	data["lb"] = $('#pool-lb').val()
 	 	data["ub"] = $('#pool-ub').val()
+	 	data["decimals"] = $('#decimals').val()
 
 	 	console.log(data)
 	 	$(this).text("Loading...")
 
 	 	$.post("/avg_cb", data, function(data) {
 	 		$('#calc-cb').text("Calculate")
-			$('#trader-results').html(data)
+			$('#content').html(data)
+	 	})
+	})
+
+	$("#calc-corr").on('click', function() {
+	 	var data = {}
+
+	 	data["pool1"] = {}
+	 	data["pool2"] = {}
+
+	 	data["pool1"]["adr"] = $('#pool1-adr').val()
+	 	data["pool1"]["token"] = $('#pool1-token').val().toLowerCase()
+
+	 	data["pool2"]["adr"] = $('#pool2-adr').val()
+	 	data["pool2"]["token"] = $('#pool2-token').val().toLowerCase()
+
+
+	 	console.log(data)
+	 	$(this).text("Loading...")
+
+	 	$.post("/pool_corr", data, function(data) {
+	 		$('#calc-corr').text("Calculate")
+			$('#content').html(data)
 	 	})
 	})
 

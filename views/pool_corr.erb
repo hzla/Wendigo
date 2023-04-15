@@ -1,0 +1,39 @@
+<div id="corr-data">
+	<section class="pool-corr">
+		<div class="section-header">% Pool1 participants in Pool2 (<%= @results[:pool_1_2_correlation].round(2) * 100 %>%)</div>
+		<div class="section-body">
+			<div id="trader-table">
+				<div class="trader-table-header">
+					<div class="adr">Address</div>
+				</div>
+
+				<div id="trader-table-body">
+					<% @results[:pool1_in_pool2_adrs].each do |adr| %>
+						<div class="trader-table-row">
+							<div class="adr"><%= adr %></div>
+						</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="pool-corr">
+		<div class="section-header">% Pool2 participants in Pool1 (<%= @results[:pool_2_1_correlation].round(2) * 100 %>%)</div>
+		<div class="section-body">
+			<div id="trader-table">
+				<div class="trader-table-header">
+					<div class="adr">Address</div>
+				</div>
+
+				<div id="trader-table-body">
+					<% @results[:pool2_in_pool1_adrs].each do |adr| %>
+						<div class="trader-table-row">
+							<div class="adr"><%= adr %></div>
+						</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

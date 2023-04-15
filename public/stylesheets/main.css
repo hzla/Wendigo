@@ -265,6 +265,18 @@ section {
 	border-radius: 4px;
 }
 
+#corr-data {
+	display: flex;
+	justify-content:  space-between;
+	margin-top: 40px;
+}
+
+.pool-corr {
+	margin: 0px 20px;
+	width:  calc(50% - 40px);
+
+}
+
 
 
 
